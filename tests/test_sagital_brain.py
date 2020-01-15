@@ -12,9 +12,9 @@ def test_average():
 
     np.savetxt("brain_sample.csv", data_input, fmt='%d', delimiter=',')
 
-      # run python program
-    subprocess.run(["python", "sagital_brain.py"])
+    # run python program
+    subprocess.run(["python", "sagital_average/sagital_brain.py"], check=True)
 
-      # Check result
+    # Check result
     result = np.loadtxt("brain_average.csv",  delimiter=',')
     np.testing.assert_array_equal(result, expected)
