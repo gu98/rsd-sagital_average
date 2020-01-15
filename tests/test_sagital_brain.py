@@ -1,5 +1,7 @@
 import numpy as np
-import subprocess
+from pathlib import Path
+from ..sagital_brain import run_averages
+TEST_DIR = Path(__file__).parent
 
  
 def test_average():
@@ -10,11 +12,11 @@ def test_average():
     expected = np.zeros(20)
     expected[-1] = 1
 
-    np.savetxt("brain_sample.csv", data_input, fmt='%d', delimiter=',')
+    np.savetxt(TEST_DIR / "brain_sample.csv", data_input, fmt='%d', delimiter=',')
 
     # run python program
-    subprocess.run(["python", "sagital_average/sagital_brain.py"], check=True)
+    run_averages(file_input=TEST_DIR / "brain_sample.csv", file_output=TEST_DIR / "brain_average.csv")
 
     # Check result
-    result = np.loadtxt("brain_average.csv",  delimiter=',')
+    result = np.loadtxt(TEST_DIR / "brain_average.csv",  delimiter=',')
     np.testing.assert_array_equal(result, expected)
